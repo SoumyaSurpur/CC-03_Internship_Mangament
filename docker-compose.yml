@@ -1,1 +1,43 @@
+services:
+  auth:
+    build: ./auth-service
+    ports:
+      - "8001:8000"
+    environment:
+      DATABASE_URL: sqlite:////data/auth.db
+    volumes:
+      - auth_data:/data
+
+  student:
+    build: ./student-service
+    ports:
+      - "8002:8000"
+    environment:
+      DATABASE_URL: sqlite:////data/students.db
+    volumes:
+      - student_data:/data
+
+  internship:
+    build: ./internship-service
+    ports:
+      - "8003:8000"
+    environment:
+      DATABASE_URL: sqlite:////data/internships.db
+    volumes:
+      - internship_data:/data
+
+  application:
+    build: ./application-service
+    ports:
+      - "8004:8000"
+    environment:
+      DATABASE_URL: sqlite:////data/applications.db
+    volumes:
+      - application_data:/data
+
+volumes:
+  auth_data:
+  student_data:
+  internship_data:
+  application_data:
 
