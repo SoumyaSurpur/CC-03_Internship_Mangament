@@ -1,9 +1,19 @@
+<<<<<<< HEAD
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from sqlalchemy import create_engine, Column, Integer, String, UniqueConstraint
 from sqlalchemy.orm import declarative_base, sessionmaker
 import os
 
+=======
+import os
+
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+from sqlalchemy import Column, Integer, String, UniqueConstraint, create_engine
+from sqlalchemy.orm import declarative_base, sessionmaker
+
+>>>>>>> 01d1120c3fac282ed78a005fe358dd09e7350d03
 engine = create_engine(os.getenv("DATABASE_URL", "sqlite:///./applications.db"),
                        connect_args={"check_same_thread": False})
 Session = sessionmaker(bind=engine)

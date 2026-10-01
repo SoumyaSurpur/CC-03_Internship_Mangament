@@ -1,3 +1,9 @@
 fastapi
+<<<<<<< HEAD
 uvicorn[standard]
+=======
+
+uvicorn[standard]
+
+>>>>>>> 01d1120c3fac282ed78a005fe358dd09e7350d03
 SQLAlchemy
