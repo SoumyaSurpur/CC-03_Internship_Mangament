@@ -217,11 +217,33 @@ Load testing is conducted against target service endpoints using **Locust** whil
 
 | Workload Level | Concurrent Requests | Avg Response Time (ms) | Throughput (RPS) | Failed Requests | CPU Utilization (%) | Memory Utilization (MB) |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **W1** | 1 | | | | | |
-| **W2** | 2 | | | | | |
-| **W3** | 4 | | | | | |
-| **W4** | 8 | | | | | |
-| **W5** | 16 | | | | | |
+| **W1** | 1 | 7.98 | 3 | 0 | 2.10 | 53.17 |
+| **W2** | 2 | 8.95 | 6.9 | 0 | 2.98 | 53.9 |
+| **W3** | 4 | 9.15 | 11.6 | 0 | 4.94 | 55.03 |
+| **W4** | 8 | 9.41 | 25.7 | 0 | 11.11 | 54.98 |
+| **W5** | 16 | 10.51 | 50.4 | 0 | 16.31 | 54.16 |
+
+#### W1: 1 concurrent user
+<img width="1920" height="1020" alt="Screenshot 2026-10-04 135459" src="https://github.com/user-attachments/assets/9e520ccb-3c1d-4206-963e-5774c4079a4f" />
+<img width="592" height="175" alt="Screenshot 2026-10-04 140128" src="https://github.com/user-attachments/assets/61ec8355-de01-41ad-b558-a809311e78ed" />
+
+#### W2: 2 concurrent user
+<img width="1916" height="540" alt="image" src="https://github.com/user-attachments/assets/2faf3ebe-0960-4f9b-b7b1-c0bed8920f69" />
+<img width="943" height="280" alt="Screenshot 2026-10-04 135938" src="https://github.com/user-attachments/assets/3d04e4c3-4c6c-47c0-a684-89ecdcb0d298" />
+
+#### W3: 4 concurrent user
+<img width="1917" height="515" alt="image" src="https://github.com/user-attachments/assets/50f813c8-935f-4e46-bcab-230d3f1eb663" />
+<img width="955" height="287" alt="image" src="https://github.com/user-attachments/assets/7407b04e-59e8-4d8e-ac50-f0bfae3c1c3b" />
+
+#### W4: 8 concurrent user
+<img width="1916" height="571" alt="image" src="https://github.com/user-attachments/assets/9e4799b9-d0ad-4610-9b86-7d40a810bc92" />
+<img width="962" height="265" alt="image" src="https://github.com/user-attachments/assets/f333276b-0f40-452d-a14f-c54b5e86faa8" />
+
+#### W5: 16 concurrent user
+<img width="1917" height="501" alt="image" src="https://github.com/user-attachments/assets/831f915c-2a94-47e8-9f09-424dedf5fa90" />
+<img width="958" height="286" alt="image" src="https://github.com/user-attachments/assets/e57ba2db-17ff-4b1f-8ee2-4e10033f6425" />
+
+
 
 ---
 
@@ -259,6 +281,15 @@ Application Service    ──► applications.db ──► Volume: application_d
   ```bash
   docker compose down -v
   ```
+
+---
+## Key Performance Insights
+1. Throughput Scales Linearly with ConcurrencyAs concurrent users increase from 1 (W1) to 16 (W5), throughput increases nearly 17x (from 3 RPS to 50.4 RPS).   This shows that your FastAPI microservice stack and Docker network handle concurrent requests efficiently without hitting a early performance bottleneck.
+2. Extremely Low Latency DegradationAverage response time remains virtually flat, increasing by only ~2.5 ms under 16x load (from 7.98 ms at W1 to 10.51 ms at W5).   The asynchronous nature of FastAPI/Uvicorn allows request queuing and execution to stay highly responsive under load.  
+3.  Resource Utilization EfficiencyCPU Utilization: Scales predictably with request volume, rising from 2.10% at baseline up to 16.31% at 16 concurrent users.   Memory Utilization: Remains exceptionally stable around ~53–55 MB across all test runs. SQLite in memory/file mode combined with lightweight Python processes keeps the overall container footprint minimal.
+4. Zero Failures Across All WorkloadsFailed Requests = 0 across all 5 test levels, demonstrating 100% service availability and stability under load.  
+
+
 
 ---
 
