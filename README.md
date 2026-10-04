@@ -8,6 +8,7 @@ The project is divided into three independent services. Each service has its own
 
 | Service             | Purpose                        | Port |
 | ------------------- | ------------------------------ | ---: |
+| Authentication Service     | Authenticate student information     | 8001 |
 | Student Service     | Manage student information     | 8002 |
 | Internship Service  | Manage internship details      | 8003 |
 | Application Service | Manage internship applications | 8004 |
@@ -16,19 +17,8 @@ Each service runs independently in its own Docker container.
 
 ## Architecture
 
-```text
-                    Internship Management System
-                                 |
-                  -------------------------------
-                  |              |              |                  
-               Student       Internship    Application
-               Service        Service        Service
-                  |              |              |                  
-             students.db   internships.db  applications.db
-                  |              |              |                  
-               Docker         Docker         Docker
-               Volume         Volume         Volume
-```
+<img width="983" height="282" alt="image" src="https://github.com/user-attachments/assets/153aa257-9eef-41d2-970c-05177abecfe3" />
+
 
 
 ## Project Structure
@@ -37,6 +27,10 @@ Each service runs independently in its own Docker container.
 CC-03-Internship-Management/
 ├── application-service/
 │   ├── __pycache__/
+│   ├── app.py
+│   ├── Dockerfile
+│   └── requirements.txt
+├── authentication-service/
 │   ├── app.py
 │   ├── Dockerfile
 │   └── requirements.txt
@@ -50,7 +44,10 @@ CC-03-Internship-Management/
 │   └── requirements.txt
 ├── .env
 ├── docker-compose.yml
-├── locustfile.py
+├── authentication_locustfile.py
+├── application_locustfile.py
+├── student_locustfile.py
+├── internship_locustfile.py
 └── README.md
 
 ```
@@ -136,12 +133,14 @@ Each service is an independent FastAPI application with dedicated endpoints and 
 Each service contains its own `Dockerfile` and builds into a standalone image.
 
 ### Docker Hub Image Repositories
+* **Authentication Service:** `ananyaabhat/student-service:latest`
 * **Student Service:** `ananyaabhat/student-service:latest`
 * **Internship Service:** `bhagyashree028/internship-service:v1`
 * **Application Service:** `priya721k/application-service:v1`
 
 #### Pull pre-built images from Docker Hub:
 ```bash
+docker pull 
 docker pull ananyaabhat/student-service:latest
 docker pull bhagyashree028/internship-service:v1
 docker pull priya721k/application-service:v1
@@ -229,7 +228,7 @@ Load testing is conducted against target service endpoints using **Locust** whil
 
 
 ### Performance Observation Table - Authentication Service
-
+#### TODO: 
 | Workload Level | Concurrent Requests | Avg Response Time (ms) | Throughput (RPS) | Failed Requests | CPU Utilization (%) | Memory Utilization (MB) |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | **W1** | 1 | 7.98 | 3 | 0 | 2.10 | 53.17 |
@@ -243,22 +242,22 @@ Load testing is conducted against target service endpoints using **Locust** whil
 
 | Workload Level | Concurrent Requests | Avg Response Time (ms) | Throughput (RPS) | Failed Requests | CPU Utilization (%) | Memory Utilization (MB) |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **W1** | 1 | 7.98 | 3 | 0 | 2.10 | 53.17 |
-| **W2** | 2 | 8.95 | 6.9 | 0 | 2.98 | 53.9 |
-| **W3** | 4 | 9.15 | 11.6 | 0 | 4.94 | 55.03 |
-| **W4** | 8 | 9.41 | 25.7 | 0 | 11.11 | 54.98 |
-| **W5** | 16 | 10.51 | 50.4 | 0 | 16.31 | 54.16 |
+| **W1** | 1 | 10.53 | 3.1 | 0 | 1 | 55.2 |
+| **W2** | 2 | 10.45 | 5.8 | 0 | 2.60 | 55.48 |
+| **W3** | 4 | 10.27 | 12.4 | 0 | 5.14 | 55.14 |
+| **W4** | 8 | 10.19 | 25.6 | 0 | 3.93 | 55.14 |
+| **W5** | 16 | 10.4 | 50.6 | 0 | 3.93 | 55.14 |
 
 
 ### Performance Observation Table - Internship Service
 
 | Workload Level | Concurrent Requests | Avg Response Time (ms) | Throughput (RPS) | Failed Requests | CPU Utilization (%) | Memory Utilization (MB) |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **W1** | 1 | 7.98 | 3 | 0 | 2.10 | 53.17 |
-| **W2** | 2 | 8.95 | 6.9 | 0 | 2.98 | 53.9 |
-| **W3** | 4 | 9.15 | 11.6 | 0 | 4.94 | 55.03 |
-| **W4** | 8 | 9.41 | 25.7 | 0 | 11.11 | 54.98 |
-| **W5** | 16 | 10.51 | 50.4 | 0 | 16.31 | 54.16 |
+| **W1** | 1 | 9.25 | 3.1 | 0 | 1.70 | 53.95 |
+| **W2** | 2 | 8.96 | 6.4 | 0 | 2.55 | 54.29 |
+| **W3** | 4 | 9.4 | 13.6 | 0 | 5.54 | 54.48 |
+| **W4** | 8 | 11.23 | 26.4 | 0 | 10.87 | 55.46 |
+| **W5** | 16 | 11.74 | 50.8 | 0 | 19.20 | 56.14 |
 
 
 ### Performance Observation Table - Application Service
