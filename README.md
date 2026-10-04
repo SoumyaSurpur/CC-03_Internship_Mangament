@@ -138,13 +138,13 @@ Each service contains its own `Dockerfile` and builds into a standalone image.
 ### Docker Hub Image Repositories
 * **Student Service:** `ananyaabhat/student-service:latest`
 * **Internship Service:** `bhagyashree028/internship-service:v1`
-* **Application Service:** `priya721k/application-service:v1`
+* **Application Service:** `priya721k/internship-application:v1`
 
 #### Pull pre-built images from Docker Hub:
 ```bash
 docker pull ananyaabhat/student-service:latest
 docker pull bhagyashree028/internship-service:v1
-docker pull priya721k/application-service:v1
+docker pull priya721k/internship-application:v1
 ```
 
 ### Deployment via Docker Compose
