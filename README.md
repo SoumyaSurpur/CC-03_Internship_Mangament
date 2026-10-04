@@ -201,9 +201,9 @@ Load testing is conducted against target service endpoints using **Locust** whil
    docker compose up -d
    ```
 
-2. Run Locust against the Application Service:
+2. Run Locust against the Authentication Service:
    ```bash
-   locust -f locustfile.py --host http://localhost:8004
+   locust -f locustfile.py --host http://localhost:8001
    ```
 
 3. Open [http://localhost:8089](http://localhost:8089) in your browser and execute tests across 5 concurrency levels (1, 2, 4, 8, and 16 concurrent users).
@@ -213,7 +213,22 @@ Load testing is conducted against target service endpoints using **Locust** whil
    docker stats
    ```
 
-### Performance Observation Table
+5. Repeat steps 2 to 4 for
+   Student service:
+      ```bash
+     locust -f locustfile.py --host http://localhost:8002
+     ```
+   Internship service:
+      ```bash
+     locust -f locustfile.py --host http://localhost:8003
+     ```
+      Application Service:
+      ```bash
+     locust -f locustfile.py --host http://localhost:8004
+     ```
+
+
+### Performance Observation Table - Authentication Service
 
 | Workload Level | Concurrent Requests | Avg Response Time (ms) | Throughput (RPS) | Failed Requests | CPU Utilization (%) | Memory Utilization (MB) |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
@@ -223,27 +238,38 @@ Load testing is conducted against target service endpoints using **Locust** whil
 | **W4** | 8 | 9.41 | 25.7 | 0 | 11.11 | 54.98 |
 | **W5** | 16 | 10.51 | 50.4 | 0 | 16.31 | 54.16 |
 
-#### W1: 1 concurrent user
-<img width="1920" height="1020" alt="Screenshot 2026-10-04 135459" src="https://github.com/user-attachments/assets/9e520ccb-3c1d-4206-963e-5774c4079a4f" />
-<img width="592" height="175" alt="Screenshot 2026-10-04 140128" src="https://github.com/user-attachments/assets/61ec8355-de01-41ad-b558-a809311e78ed" />
 
-#### W2: 2 concurrent user
-<img width="1916" height="540" alt="image" src="https://github.com/user-attachments/assets/2faf3ebe-0960-4f9b-b7b1-c0bed8920f69" />
-<img width="943" height="280" alt="Screenshot 2026-10-04 135938" src="https://github.com/user-attachments/assets/3d04e4c3-4c6c-47c0-a684-89ecdcb0d298" />
+### Performance Observation Table - Student Service
 
-#### W3: 4 concurrent user
-<img width="1917" height="515" alt="image" src="https://github.com/user-attachments/assets/50f813c8-935f-4e46-bcab-230d3f1eb663" />
-<img width="955" height="287" alt="image" src="https://github.com/user-attachments/assets/7407b04e-59e8-4d8e-ac50-f0bfae3c1c3b" />
-
-#### W4: 8 concurrent user
-<img width="1916" height="571" alt="image" src="https://github.com/user-attachments/assets/9e4799b9-d0ad-4610-9b86-7d40a810bc92" />
-<img width="962" height="265" alt="image" src="https://github.com/user-attachments/assets/f333276b-0f40-452d-a14f-c54b5e86faa8" />
-
-#### W5: 16 concurrent user
-<img width="1917" height="501" alt="image" src="https://github.com/user-attachments/assets/831f915c-2a94-47e8-9f09-424dedf5fa90" />
-<img width="958" height="286" alt="image" src="https://github.com/user-attachments/assets/e57ba2db-17ff-4b1f-8ee2-4e10033f6425" />
+| Workload Level | Concurrent Requests | Avg Response Time (ms) | Throughput (RPS) | Failed Requests | CPU Utilization (%) | Memory Utilization (MB) |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **W1** | 1 | 7.98 | 3 | 0 | 2.10 | 53.17 |
+| **W2** | 2 | 8.95 | 6.9 | 0 | 2.98 | 53.9 |
+| **W3** | 4 | 9.15 | 11.6 | 0 | 4.94 | 55.03 |
+| **W4** | 8 | 9.41 | 25.7 | 0 | 11.11 | 54.98 |
+| **W5** | 16 | 10.51 | 50.4 | 0 | 16.31 | 54.16 |
 
 
+### Performance Observation Table - Internship Service
+
+| Workload Level | Concurrent Requests | Avg Response Time (ms) | Throughput (RPS) | Failed Requests | CPU Utilization (%) | Memory Utilization (MB) |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **W1** | 1 | 7.98 | 3 | 0 | 2.10 | 53.17 |
+| **W2** | 2 | 8.95 | 6.9 | 0 | 2.98 | 53.9 |
+| **W3** | 4 | 9.15 | 11.6 | 0 | 4.94 | 55.03 |
+| **W4** | 8 | 9.41 | 25.7 | 0 | 11.11 | 54.98 |
+| **W5** | 16 | 10.51 | 50.4 | 0 | 16.31 | 54.16 |
+
+
+### Performance Observation Table - Application Service
+
+| Workload Level | Concurrent Requests | Avg Response Time (ms) | Throughput (RPS) | Failed Requests | CPU Utilization (%) | Memory Utilization (MB) |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **W1** | 1 | 7.98 | 3 | 0 | 2.10 | 53.17 |
+| **W2** | 2 | 8.95 | 6.9 | 0 | 2.98 | 53.9 |
+| **W3** | 4 | 9.15 | 11.6 | 0 | 4.94 | 55.03 |
+| **W4** | 8 | 9.41 | 25.7 | 0 | 11.11 | 54.98 |
+| **W5** | 16 | 10.51 | 50.4 | 0 | 16.31 | 54.16 |
 
 ---
 
