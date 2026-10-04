@@ -2,13 +2,12 @@
 
 A simple **microservices-based Internship Management System** built using **FastAPI, SQLite, Docker, and Docker Compose**.
 
-The project is divided into four independent services. Each service has its own application, Docker image, and SQLite database.
+The project is divided into three independent services. Each service has its own application, Docker image, and SQLite database.
 
 ## Services
 
 | Service             | Purpose                        | Port |
 | ------------------- | ------------------------------ | ---: |
-| Auth Service        | User registration and login    | 8001 |
 | Student Service     | Manage student information     | 8002 |
 | Internship Service  | Manage internship details      | 8003 |
 | Application Service | Manage internship applications | 8004 |
@@ -19,69 +18,60 @@ Each service runs independently in its own Docker container.
 
 ```text
                     Internship Management System
-                              |
-          -------------------------------------------
-          |          |           |                  |
-       Auth       Student    Internship       Application
-      Service      Service      Service          Service
-          |          |           |                  |
-       auth.db    students.db  internships.db  applications.db
-          |          |           |                  |
-       Docker     Docker       Docker           Docker
-       Volume     Volume       Volume           Volume
+                                 |
+                  -------------------------------
+                  |              |              |                  
+               Student       Internship    Application
+               Service        Service        Service
+                  |              |              |                  
+             students.db   internships.db  applications.db
+                  |              |              |                  
+               Docker         Docker         Docker
+               Volume         Volume         Volume
 ```
+
 
 ## Project Structure
 
 ```text
-internship-management-sqlite/
-│
-├── auth-service/
+CC-03-Internship-Management/
+├── application-service/
+│   ├── __pycache__/
 │   ├── app.py
 │   ├── Dockerfile
 │   └── requirements.txt
-│
-├── student-service/
-│   ├── app.py
-│   ├── Dockerfile
-│   └── requirements.txt
-│
 ├── internship-service/
 │   ├── app.py
 │   ├── Dockerfile
 │   └── requirements.txt
-│
-├── application-service/
+├── student-service/
 │   ├── app.py
 │   ├── Dockerfile
 │   └── requirements.txt
-│
+├── .env
 ├── docker-compose.yml
-├── .env.example
-├── .gitignore
+├── locustfile.py
 └── README.md
+
 ```
 
 ## Technologies Used
 
-* Python
-* FastAPI
-* SQLAlchemy
-* SQLite
-* Docker
-* Docker Compose
-* Git
-* GitHub
-* Docker Hub
+* **Language & Framework:** Python, FastAPI, Pydantic, SQLAlchemy
+* **Database & Persistence:** SQLite, Docker Named Volumes
+* **Containerization & Orchestration:** Docker, Docker Compose
+* **Version Control & Registry:** Git, GitHub, Docker Hub
+* **Workload Testing:** Locust
+
+---
 
 ## Prerequisites
 
-Install the following on your system:
-
+Ensure the following tools are installed on your host system:
 * Git
 * Docker Desktop
 
-Check the installations:
+### Verify Installations
 
 ```bash
 git --version
@@ -89,172 +79,21 @@ docker --version
 docker compose version
 ```
 
-## Run Using Docker Compose
+---
 
-Clone the repository:
+## Checkpoint 1: Design and Develop the Microservices
 
-```bash
-git clone <YOUR_GITHUB_REPOSITORY_URL>
-```
+Each service is an independent FastAPI application with dedicated endpoints and isolated SQLite persistence.
 
-Go into the project directory:
+### API Specifications & Interactive Documentation
 
-```bash
-cd internship-management-sqlite
-```
+* **Student Service API:** [http://localhost:8002/docs](http://localhost:8002/docs)
+* **Internship Service API:** [http://localhost:8003/docs](http://localhost:8003/docs)
+* **Application Service API:** [http://localhost:8004/docs](http://localhost:8004/docs)
 
-Start all services:
+### Sample Endpoints & Payloads
 
-```bash
-docker compose up --build
-```
-
-The four containers will start together.
-
-### API Documentation
-
-FastAPI provides interactive Swagger documentation for each service.
-
-**Auth Service**
-
-http://localhost:8001/docs
-
-**Student Service**
-
-http://localhost:8002/docs
-
-**Internship Service**
-
-http://localhost:8003/docs
-
-**Application Service**
-
-http://localhost:8004/docs
-
-You can use these pages to test the APIs directly from the browser.
-
-## Docker Containers
-
-After starting the project, check the running containers:
-
-```bash
-docker ps
-```
-
-You should see four containers corresponding to:
-
-```text
-auth
-student
-internship
-application
-```
-
-To stop the containers:
-
-```bash
-docker compose down
-```
-
-To stop the containers and delete the SQLite volumes:
-
-```bash
-docker compose down -v
-```
-
-> `docker compose down -v` permanently removes the databases stored in the Docker volumes.
-
-## Docker Hub Images
-
-Docker images for the individual services are also available on Docker Hub.
-
-Docker Hub username:
-
-```text
-bhagyashree028
-```
-
-Images:
-
-```text
-bhagyashree028/auth-service:v1
-bhagyashree028/student-service:v1
-bhagyashree028/internship-service:v1
-bhagyashree028/application-service:v1
-```
-
-The images can be pulled using:
-
-```bash
-docker pull bhagyashree028/auth-service:v1
-docker pull bhagyashree028/student-service:v1
-docker pull bhagyashree028/internship-service:v1
-docker pull bhagyashree028/application-service:v1
-```
-
-The current `docker-compose.yml` builds the services from their Dockerfiles using:
-
-```bash
-docker compose up --build
-```
-
-## Example API Usage
-
-### 1. Register a User
-
-Open the Auth Service:
-
-```text
-http://localhost:8001/docs
-```
-
-Use:
-
-```http
-POST /register
-```
-
-Example:
-
-```json
-{
-  "name": "Asha",
-  "email": "asha@example.com",
-  "password": "demo123"
-}
-```
-
-### 2. Login
-
-```http
-POST /login
-```
-
-Example:
-
-```json
-{
-  "email": "asha@example.com",
-  "password": "demo123"
-}
-```
-
-### 3. Create a Student
-
-Open:
-
-```text
-http://localhost:8002/docs
-```
-
-Use:
-
-```http
-POST /students
-```
-
-Example:
-
+#### 1. Register Student (`POST /students`)
 ```json
 {
   "name": "Asha",
@@ -264,22 +103,7 @@ Example:
 }
 ```
 
-### 4. Create an Internship
-
-Open:
-
-```text
-http://localhost:8003/docs
-```
-
-Use:
-
-```http
-POST /internships
-```
-
-Example:
-
+#### 2. Create Internship Listing (`POST /internships`)
 ```json
 {
   "title": "Backend Intern",
@@ -289,22 +113,7 @@ Example:
 }
 ```
 
-### 5. Apply for an Internship
-
-Open:
-
-```text
-http://localhost:8004/docs
-```
-
-Use:
-
-```http
-POST /applications
-```
-
-Example:
-
+#### 3. Submit Application (`POST /applications`)
 ```json
 {
   "student_id": 1,
@@ -312,159 +121,155 @@ Example:
 }
 ```
 
-### 6. Update Application Status
-
-```http
-PATCH /applications/1/status
-```
-
-Example:
-
+#### 4. Update Application Status (`PATCH /applications/{id}/status`)
 ```json
 {
   "status": "accepted"
 }
 ```
+> **Note:** Allowed statuses are `pending`, `accepted`, and `rejected`.
 
-Allowed statuses:
+---
 
-```text
-pending
-accepted
-rejected
-```
+## Checkpoint 2: Containerize and Deploy the Application
 
-## Database and Volumes
+Each service contains its own `Dockerfile` and builds into a standalone image.
 
-Each service has its own SQLite database.
+### Docker Hub Image Repositories
+* **Student Service:** `ananyaabhat/student-service:v1`
+* **Internship Service:** `bhagyashree028/internship-service:v1`
+* **Application Service:** `priya721k/application-service:v1`
 
-```text
-Auth Service          → auth.db
-Student Service       → students.db
-Internship Service    → internships.db
-Application Service   → applications.db
-```
-
-Docker Compose creates separate named volumes:
-
-```text
-auth_data
-student_data
-internship_data
-application_data
-```
-
-This allows the data to remain available even when the containers are stopped and restarted.
-
-## Useful Docker Commands
-
-View running containers:
-
+#### Pull pre-built images from Docker Hub:
 ```bash
-docker ps
+docker pull ananyaabhat/student-service:v1
+docker pull bhagyashree028/internship-service:v1
+docker pull priya721k/application-service:v1
 ```
 
-View all containers:
+### Deployment via Docker Compose
 
-```bash
-docker ps -a
+1. Clone the repository and navigate to the project directory:
+   ```bash
+   git clone <YOUR_GITHUB_REPOSITORY_URL>
+   cd CC-03-Internship-Management
+   ```
+
+2. Launch all microservices:
+   ```bash
+   docker compose up --build -d
+   ```
+
+3. Verify running containers:
+   ```bash
+   docker ps
+   ```
+
+---
+
+## Checkpoint 3: Establish and Demonstrate Microservice Communication
+
+Inter-service communication is enabled through a dedicated Docker bridge network created automatically by Docker Compose.
+
+```
+ Client Request
+       │
+       ▼
+┌──────────────┐      Internal HTTP       ┌──────────────┐
+│ Application  ├─────────────────────────►│   Student    │
+│   Service    │  http://student:8000/    │   Service    │
+│  (Port 8004) │                          └──────────────┘
+│              │      Internal HTTP       ┌──────────────┐
+│              ├─────────────────────────►│  Internship  │
+│              │ http://internship:8000/  │   Service    │
+└──────────────┘                          └──────────────┘
 ```
 
-View images:
+* **Service Discovery:** Microservices reference each other using container service names (`http://student:8000` and `http://internship:8000`) instead of hardcoded local IP addresses.
+* **End-to-End Flow:** When creating an application via `POST /applications`, the `application-service` validates `student_id` and `internship_id` across the internal network before persisting the entry.
 
-```bash
-docker images
+---
+
+## Checkpoint 4: Generate Varying Workloads and Monitor Performance
+
+Load testing is conducted against target service endpoints using **Locust** while concurrently tracking resource consumption via `docker stats`.
+
+### Execution Steps
+
+1. Start the container stack:
+   ```bash
+   docker compose up -d
+   ```
+
+2. Run Locust against the Application Service:
+   ```bash
+   locust -f locustfile.py --host http://localhost:8004
+   ```
+
+3. Open [http://localhost:8089](http://localhost:8089) in your browser and execute tests across 5 concurrency levels (1, 2, 4, 8, and 16 concurrent users).
+
+4. Monitor CPU and Memory metrics in real time:
+   ```bash
+   docker stats
+   ```
+
+### Performance Observation Table
+
+| Workload Level | Concurrent Requests | Avg Response Time (ms) | Throughput (RPS) | Failed Requests | CPU Utilization (%) | Memory Utilization (MB) |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **W1** | 1 | | | | | |
+| **W2** | 2 | | | | | |
+| **W3** | 4 | | | | | |
+| **W4** | 8 | | | | | |
+| **W5** | 16 | | | | | |
+
+---
+
+## Checkpoint 5: Analyze and Present the Results
+
+### Data Persistence & Volume Management
+
+Each microservice maintains data isolation via dedicated SQLite databases and Docker named volumes:
+
+```
+Student Service        ──► students.db     ──► Volume: student_data
+Internship Service     ──► internships.db  ──► Volume: internship_data
+Application Service    ──► applications.db ──► Volume: application_data
 ```
 
-View logs of all services:
+### Useful Management Commands
 
-```bash
-docker compose logs
-```
+* **View container logs:**
+  ```bash
+  docker compose logs -f
+  ```
+* **View logs for a single service:**
+  ```bash
+  docker compose logs application
+  ```
+* **Restart container stack:**
+  ```bash
+  docker compose restart
+  ```
+* **Stop containers while preserving volume data:**
+  ```bash
+  docker compose down
+  ```
+* **Tear down environment and delete database volumes:**
+  ```bash
+  docker compose down -v
+  ```
 
-View logs of one service:
-
-```bash
-docker compose logs auth
-```
-
-Restart the project:
-
-```bash
-docker compose restart
-```
-
-Stop the project:
-
-```bash
-docker compose down
-```
-
-Stop and remove volumes:
-
-```bash
-docker compose down -v
-```
+---
 
 ## Git Workflow
-
-Basic Git workflow used for this project:
 
 ```bash
 git status
 git add .
-git commit -m "Update project"
-git push
+git commit -m "Update microservice stack"
+git push origin main
 ```
-
-To get the latest changes from GitHub:
-
-```bash
-git pull
-```
-
-## How the Project Works
-
-Each service is an independent FastAPI application.
-
-```text
-Client
-  |
-  |----> Auth Service
-  |
-  |----> Student Service
-  |
-  |----> Internship Service
-  |
-  |----> Application Service
-```
-
-Each service:
-
-1. Has its own FastAPI application.
-2. Has its own Dockerfile.
-3. Has its own Python dependencies.
-4. Runs inside its own container.
-5. Uses its own SQLite database.
-6. Stores database data in a Docker volume.
-
-Docker Compose is used to start all four services together.
-
-## Learning Objectives
-
-This project was created to understand the basics of:
-
-* Microservice architecture
-* FastAPI services
-* REST APIs
-* Dockerfiles
-* Docker images
-* Docker containers
-* Docker volumes
-* Docker Compose
-* Docker Hub
-* Git and GitHub
-* Running multiple services together
 
 
 
