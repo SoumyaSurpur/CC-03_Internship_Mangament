@@ -271,6 +271,20 @@ Load testing is conducted against target service endpoints using **Locust** whil
 
 ---
 
+## Graphs:
+### Concurrent requests vs Average Response Time
+<img width="2400" height="1500" alt="image" src="https://github.com/user-attachments/assets/cac14af2-0a10-42c0-b0fd-27ca4f8ad4b5" />
+
+### Concurrent requests vs Throughput
+<img width="2400" height="1500" alt="image" src="https://github.com/user-attachments/assets/0ebde50d-b0ae-4abf-85ee-a09a0d133f3d" />
+
+### Concurrent requests vs CPU Utilization
+<img width="2400" height="1500" alt="image" src="https://github.com/user-attachments/assets/827a3d95-a808-4176-baf2-b740a251f362" />
+
+### Concurrent requests vs Memory Utilization
+<img width="2400" height="1500" alt="image" src="https://github.com/user-attachments/assets/f2d6e345-abed-4220-a5fb-be550823b429" />
+
+
 ## Checkpoint 5: Analyze and Present the Results
 
 ### Data Persistence & Volume Management
