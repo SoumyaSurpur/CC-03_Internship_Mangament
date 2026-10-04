@@ -133,7 +133,7 @@ Each service is an independent FastAPI application with dedicated endpoints and 
 Each service contains its own `Dockerfile` and builds into a standalone image.
 
 ### Docker Hub Image Repositories
-* **Authentication Service:** `ananyaabhat/student-service:latest`
+* **Authentication Service:** `soumyasurpur/auth-service:latest`
 * **Student Service:** `ananyaabhat/student-service:latest`
 * **Internship Service:** `bhagyashree028/internship-service:v1`
 * **Application Service:** `priya721k/application-service:v1`
