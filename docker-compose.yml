@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   student:
     image: ananyaabhat/student-service:latest
@@ -11,7 +9,7 @@ services:
       - student_data:/data
 
   internship:
-    image: teammate2_username/internship-service:latest
+    image: bhagyashree028/internship-service:v1
     ports:
       - "8003:8000"
     environment:
@@ -20,7 +18,7 @@ services:
       - internship_data:/data
 
   application:
-    image: priya721k/application-service:latest
+    image: priya721k/application-service:v1
     ports:
       - "8004:8000"
     environment:
