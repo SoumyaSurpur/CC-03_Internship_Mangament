@@ -228,14 +228,13 @@ Load testing is conducted against target service endpoints using **Locust** whil
 
 
 ### Performance Observation Table - Authentication Service
-#### TODO: 
 | Workload Level | Concurrent Requests | Avg Response Time (ms) | Throughput (RPS) | Failed Requests | CPU Utilization (%) | Memory Utilization (MB) |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **W1** | 1 | 7.98 | 3 | 0 | 2.10 | 53.17 |
-| **W2** | 2 | 8.95 | 6.9 | 0 | 2.98 | 53.9 |
-| **W3** | 4 | 9.15 | 11.6 | 0 | 4.94 | 55.03 |
-| **W4** | 8 | 9.41 | 25.7 | 0 | 11.11 | 54.98 |
-| **W5** | 16 | 10.51 | 50.4 | 0 | 16.31 | 54.16 |
+| **W1** | 1 | 8.02 | 3.3 | 0 | 2.1 | 52.05 |
+| **W2** | 2 | 8.95 | 5.9 | 0 | 2.75 | 53.2 |
+| **W3** | 4 | 9.07 | 12.3 | 0 | 4.0 | 54.5 |
+| **W4** | 8 | 9.1 | 26 | 0 | 9.56 | 54.5 |
+| **W5** | 16 | 10.49 | 50 | 0 | 10.0 | 55.7 |
 
 
 ### Performance Observation Table - Student Service
