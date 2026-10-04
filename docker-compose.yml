@@ -1,6 +1,8 @@
+version: '3.8'
+
 services:
   student:
-    build: ./student-service
+    image: ananyaabhat/student-service:latest
     ports:
       - "8002:8000"
     environment:
@@ -9,7 +11,7 @@ services:
       - student_data:/data
 
   internship:
-    build: ./internship-service
+    image: teammate2_username/internship-service:latest
     ports:
       - "8003:8000"
     environment:
@@ -18,7 +20,7 @@ services:
       - internship_data:/data
 
   application:
-    build: ./application-service
+    image: priya721k/application-service:latest
     ports:
       - "8004:8000"
     environment:
@@ -27,8 +29,6 @@ services:
       - application_data:/data
 
 volumes:
-  auth_data:
   student_data:
   internship_data:
   application_data:
-
